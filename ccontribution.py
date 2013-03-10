@@ -19,11 +19,9 @@ class ccontribution(contribution):
 
     def report(self,x):
         amounts=self.all_contribution_amounts(x)
-        print x,amounts[0],
-        if x != self._nm:
-            print amounts[-1], # minimum for any period
+        print x,amounts,
         r=self.residuals(x)
-        if r>0:
+        if self._c.round(r)>0:
             print "%(r)d %(c)d%%" % {"r":r,"c":self.contribute_percentage(r)} # year end
         else:
             print
