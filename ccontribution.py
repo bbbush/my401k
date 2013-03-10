@@ -1,6 +1,6 @@
 from contribution import contribution
 
-class ccontribution(contribution):
+class ccontribution:
     def __init__(self, limit,income,nm=12,match=7):
         self._c= contribution(limit,income,match)
         self._nm=self._c.check(nm)
@@ -14,6 +14,7 @@ class ccontribution(contribution):
     def contribute_percentage(self,r):
         return self._c.contribute_percentage(self._nm,r)
 
+
     def all_contribution_amounts(self,x):
         return self._c.all_contribution_amounts(self._nm,x)
 
@@ -22,7 +23,7 @@ class ccontribution(contribution):
         print x,amounts,
         r=self.residuals(x)
         if self._c.round(r)>0:
-            print "%(r)d %(c)d%%" % {"r":r,"c":self.contribute_percentage(r)} # year end
+            print "{0:.2f} {1:.0%}".format(r,self.contribute_percentage(r)) # year end
         else:
             print
 
