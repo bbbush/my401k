@@ -15,7 +15,7 @@ class contribution:
 
     def contribute_value(self,nm,x):
         nm,x=self.check2(nm,x)
-        return self._match+int(0.5+(self._mm-self._match)*nm/x)
+        return self._match+max(0,int(0.5+self._mm-self._match)*nm/x) # no reduce
 
     def all_contributions(self,nm):
         nm=self.check(nm)
@@ -34,16 +34,26 @@ class contribution:
         c=max(0,c)
         return self.round(self._income/nm*c/100)
 
+    def append_amount(self,l,a,s):
+        if self._limit-s>a:
+            l.append(a)
+            s+=a
+        else:
+            l.append(self.round(self._limit-s))
+            s=self._limit
+        return s
+
     def all_contribution_amounts(self,nm,x):
         nm,x=self.check2(nm,x)
         result=[]
+        s=0
         c=self.contribute_value(nm,x)
         a1=self.contribute_amount(nm,c)
         for i in range(x):
-            result.append(a1)
+            s=self.append_amount(result,a1,s)
         a2=self.contribute_amount(nm,self._match)
         for i in range(x,nm):
-            result.append(a2)
+            s=self.append_amount(result,a2,s)
         return result
 
     def contribute_percentage(self,nm,r):
