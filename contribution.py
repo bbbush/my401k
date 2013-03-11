@@ -51,13 +51,3 @@ class contribution:
                 break
         return result
 
-    def contribute_percentage(self,nm,r):
-        nm=self.check(nm)
-        r=.0+max(0,r)
-        return r/(self._income/nm)
-
-    def residuals(self,nm,x):
-        nm,x=self.check2(nm,x)
-        r=0
-        return self._limit-sum(self.all_contribution_amounts(nm,x))
-
