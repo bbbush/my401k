@@ -2,8 +2,8 @@ class contribution:
     def __init__(self,limit,income,match=7):
         self._limit=.0+max(0,limit)
         self._income=.0+max(0,income)
-        self._mm=100*self._limit/self._income
-        self._match = min(max(0,int(match)), int(0.5+self._mm))
+        self._mm=int(100*self._limit/self._income)
+        self._match = min(max(0,int(match)), self._mm)
 
     def check(self,nm):
         return max(1,int(nm))
@@ -15,7 +15,7 @@ class contribution:
 
     def contribute_value(self,nm,x):
         nm,x=self.check2(nm,x)
-        return self._match+max(0,int(0.5+self._mm-self._match)*nm/x) # no reduce
+        return self._match+max(0,(self._mm-self._match)*nm/x) # no reduce
 
     def all_contributions(self,nm):
         nm=self.check(nm)
@@ -26,13 +26,13 @@ class contribution:
         nm=self.check(nm)
         return (j for i,j in self.all_contributions(nm))
 
-    def round(self,a):
-        return int(0.5+100*a)/100.0
+    def ceil(self,a):
+        return round(0.5+100*a)/100
 
     def contribute_amount(self,nm,c):
         nm=self.check(nm)
         c=max(0,c)
-        return self.round(self._income/nm*c/100)
+        return self.ceil(self._income/nm*c/100)
 
     def all_contribution_amounts(self,nm,x):
         nm,x=self.check2(nm,x)
@@ -46,7 +46,7 @@ class contribution:
                 result.append(a)
                 s+=a
             else:
-                result.append(self.round(self._limit-s))
+                result.append(self.ceil(self._limit-s))
                 s=self._limit
                 break
         return result
