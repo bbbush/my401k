@@ -14,16 +14,16 @@ class ccontribution:
 
     def report(self,x):
         amounts=self.all_contribution_amounts(x)
-        print x,amounts,
+        print(x,amounts,end="")
         r=self._c.ceil(self._c._limit-sum(amounts))
         if r>0:
-            print "{0:.2f} {1:.0%}".format(r,self.residuals_percentage(r)) # year end
+            print("{0:.2f} {1:.0%}".format(r,self.residuals_percentage(r))) # year end
         else:
-            print
+            print()
 
     def all_reports(self):
         t=tuple(self._c.all_contributions(self._nm))
-        print zip(*t)[1] # minimum
+        print(list(zip(*t))[1]) # minimum
         for i,j in t:
             if j>100:
                 continue
